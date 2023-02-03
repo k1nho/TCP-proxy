@@ -1,0 +1,31 @@
+{
+  "Apps": [
+    {
+      "Name": "Vite App",
+      "Ports": [
+        7001,
+        7200,
+        7300,
+        7400
+      ],
+      "Targets": [
+        "localhost:6379",
+        "unavailable-serve.echo:7003"
+      ]
+    },
+    {
+      "Name": "Next App",
+      "Ports": [
+        6001,
+        6200,
+        6300,
+        6400
+      ],
+      "Targets": [
+        "server.echo-123:6001",
+        "server.echo-123:6002",
+        "unavailable-serve.echo:6003"
+      ]
+    }
+  ]
+}
