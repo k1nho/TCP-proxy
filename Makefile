@@ -7,6 +7,9 @@ build:
 run: 
 	prod/tcp_proxy
 
+test:
+	cd test_proxy; go test -v
+
 clean: 
 	rm -rf prod
 
