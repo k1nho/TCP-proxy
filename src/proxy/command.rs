@@ -20,7 +20,7 @@ async fn proxy_map(app_config: &Config) -> HashMap<u16, Vec<String>> {
     let mut port_to_targets = HashMap::new();
     for app in &app_config.apps {
         for port in &app.ports {
-            port_to_targets.insert(port.clone(), app.targets.clone());
+            port_to_targets.insert(*port, app.targets.clone());
         }
     }
     port_to_targets
@@ -29,10 +29,8 @@ async fn proxy_map(app_config: &Config) -> HashMap<u16, Vec<String>> {
 /// Generates a map that associates an app's name to a mutex index
 async fn port_to_index(app_config: &Config) -> HashMap<String, usize> {
     let mut port_to_idx = HashMap::new();
-    let mut i = 0;
-    for app in &app_config.apps {
+    for (i, app) in app_config.apps.iter().enumerate() {
         port_to_idx.insert(app.name.clone(), i);
-        i += 1;
     }
 
     port_to_idx
@@ -136,11 +134,9 @@ async fn handle_conn(proxy: Proxy, target_id: Arc<Mutex<usize>>) {
 
 /// Attempts to proxy a connection
 async fn try_proxy(target: &String) -> Result<TcpStream, Box<dyn std::error::Error>> {
-    match TcpStream::connect(target).await {
-        Ok(stream) => return Ok(stream),
-        Err(e) => {
-            return Err(Box::new(e));
-        }
+    return match TcpStream::connect(target).await {
+        Ok(stream) => Ok(stream),
+        Err(e) => Err(Box::new(e)),
     };
 }
 
