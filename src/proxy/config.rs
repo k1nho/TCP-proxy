@@ -30,12 +30,8 @@ pub fn config(filename: String) -> Config {
     let file_config_string = fs::read_to_string(filename);
 
     match file_config_string {
-        Ok(file_content) => {
-            let config = serde_json::from_str(&file_content)
-                .expect("could not parse config file. Invalid json format");
-
-            config
-        }
+        Ok(file_content) => serde_json::from_str(&file_content)
+            .expect("could not parse config file. Invalid json format"),
         Err(_) => {
             panic!("Please provide config file to configure proxy");
         }
