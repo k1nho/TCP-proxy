@@ -134,10 +134,10 @@ async fn handle_conn(proxy: Proxy, target_id: Arc<Mutex<usize>>) {
 
 /// Attempts to proxy a connection
 async fn try_proxy(target: &String) -> Result<TcpStream, Box<dyn std::error::Error>> {
-    return match TcpStream::connect(target).await {
+    match TcpStream::connect(target).await {
         Ok(stream) => Ok(stream),
         Err(e) => Err(Box::new(e)),
-    };
+    }
 }
 
 /// Data transfer
