@@ -10,7 +10,5 @@ pub fn round_robin(targets: &Vec<String>, target_id: &Arc<Mutex<usize>>) -> Stri
     let mut id = target_id.lock().unwrap();
     *id += 1;
 
-    let target_server = targets[*id % targets.len()].clone();
-
-    target_server
+    targets[*id % targets.len()].clone()
 }
